@@ -1,0 +1,26 @@
+.main-header{
+    background-color: #233056;
+    color: white;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+
+.main-nav{
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.main-nav li{
+
+}
+
+.right-icons svg{
+    height: 32px;
+}
