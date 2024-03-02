@@ -1,10 +1,14 @@
-import Banner from './components/Banner';
-import Footer from './components/Footer';
-import Header from './components/Header'
-import LargeForms from './components/LargeForms';
-import MealSearch from './components/MealSearch';
-import TodoList from './components/TodoList';
-import UseEffectDemo from './components/UseEffectDemo';
+import AppStore from "./Context/AppStore";
+import Banner from "./components/Banner";
+import ChangeAppName from "./components/ChangeAppName";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import LargeForms from "./components/LargeForms";
+import MealSearch from "./components/MealSearch";
+import TodoList from "./components/TodoList";
+import UseEffectDemo from "./components/UseEffectDemo";
+import UserProfile from "./components/UserProfile";
+import UsingContext from "./components/UsingContext";
 
 function App() {
   return (
@@ -16,7 +20,11 @@ function App() {
       {/* <TodoList/> */}
       {/* <UseEffectDemo/> */}
       {/* <MealSearch/> */}
-      <LargeForms/>
+      <AppStore>
+        {/* <UsingContext/>
+        <ChangeAppName/> */}
+        <UserProfile/>
+      </AppStore>
     </>
   );
 }

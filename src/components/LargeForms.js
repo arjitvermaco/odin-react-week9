@@ -1,28 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function LargeForms() {
-   const [formData,setFormData] = useState({
-    email:'',
-    password:'',
-    repeatPassword:'',
-    firstName:'',
-    lastName:'',
-    phone:'',
-    company:''
-   }) 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    repeatPassword: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    company: "",
+  });
 
-   const handleChange = (e)=>{
-    const {name,value} = e.target;
-    setFormData({...formData,[name]:value})
-   }
+  const [formErrors, setFormErrors] = useState({});
 
-   const handleSubmit = (e)=>{
-    e.preventDefault()
-    console.log(formData)
-   }
+
+  const validateEmail = (email) => {
+    const pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    return pattern.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const validateFields = (name, value) => {
+    let error = {};
+    switch (name) {
+      case "email":
+        if (!validateEmail(value)) {
+          error.email = "Invalid email address";
+        }else{
+          error.email = null
+        }
+        break;
+      case "password":
+        if (!validatePassword(value))
+          error.password = "Password must be 8 characters";
+        else
+          error.password = null;
+        break;
+      case "repeatPassword":
+        if (value !== formData.password)
+          error.repeatPassword = "Passwords dont match!!";
+        else
+          error.repeatPassword = null;
+        break;
+      //add more cases as needed
+
+      default:
+        break;
+    }
+
+    return error;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const errors = validateFields(name, value);
+    setFormErrors({ ...formErrors, ...errors });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto shadow-md p-4 mt-12">
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto shadow-md p-4 mt-12"
+    >
       <div className="relative z-0 w-full mb-5 group">
         <input
           type="email"
@@ -30,7 +78,6 @@ export default function LargeForms() {
           name="email"
           id="floating_email"
           onChange={handleChange}
-
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
@@ -41,6 +88,10 @@ export default function LargeForms() {
         >
           Email address
         </label>
+
+        {formErrors.email && (
+          <p className="text-red-500 text-sm">{formErrors.email}</p>
+        )}
       </div>
       <div className="relative z-0 w-full mb-5 group">
         <input
@@ -48,7 +99,6 @@ export default function LargeForms() {
           value={formData.password}
           name="password"
           onChange={handleChange}
-
           id="floating_password"
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
@@ -60,13 +110,15 @@ export default function LargeForms() {
         >
           Password
         </label>
+        {formErrors.password && (
+          <p className="text-red-500 text-sm">{formErrors.password}</p>
+        )}
       </div>
       <div className="relative z-0 w-full mb-5 group">
         <input
           type="password"
           name="repeatPassword"
           onChange={handleChange}
-
           value={formData.repeatPassword}
           id="floating_repeat_password"
           className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -79,6 +131,9 @@ export default function LargeForms() {
         >
           Confirm password
         </label>
+        {formErrors.repeatPassword && (
+          <p className="text-red-500 text-sm">{formErrors.repeatPassword}</p>
+        )}
       </div>
       <div className="grid md:grid-cols-2 md:gap-6">
         <div className="relative z-0 w-full mb-5 group">
@@ -86,7 +141,6 @@ export default function LargeForms() {
             type="text"
             name="firstName"
             onChange={handleChange}
-
             value={formData.firstName}
             id="floating_first_name"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -106,7 +160,6 @@ export default function LargeForms() {
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
-
             id="lastName"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" dfsd"
@@ -124,10 +177,8 @@ export default function LargeForms() {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="tel"
-            
             name="phone"
             onChange={handleChange}
-
             value={formData.phone}
             id="floating_phone"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -146,7 +197,6 @@ export default function LargeForms() {
             type="text"
             name="company"
             onChange={handleChange}
-
             value={formData.company}
             id="company"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
