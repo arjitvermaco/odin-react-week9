@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppContext } from './AppContext'
 export default function AppStore({children}) {
 
-  const [user,setUser] = useState({
-    name:"Arjit Verma",
-    email:"arjit@gmail.com",
-    password:"123abc123",
-    profileImage: "https://i.pravatar.cc/150?img=3"
-  })
+  const [cartItems , setCartItems] = useState(()=>{
+    const localData = localStorage.getItem('cartItems');
+    return localData ? JSON.parse(localData): [];
+  });
 
-  const [loggedIn,setLoggedIn] = useState(false)
+  useEffect(()=>{
+    localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    //make api call to backend here to save to backend
+    
+  },[cartItems])
 
-  const [appName,setAppName]  = useState("My New App!!!")
-
-  const [userTheme,setUserTheme] = useState("Light")
+  const [cartTotal,setCartTotal] = useState(0);
+  //If we add anything to cart , save it to localstorage 
 
   return (
-    <AppContext.Provider value={{appName,setAppName,userTheme,setUserTheme,user,loggedIn,setLoggedIn}}>
+    <AppContext.Provider value={{cartItems,setCartItems,cartTotal,setCartTotal}}>
         {children}
     </AppContext.Provider>
   )

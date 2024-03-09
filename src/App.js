@@ -19,6 +19,8 @@ import HtmlCourse from "./pages/course/HtmlCourse";
 import ProductsPage from "./pages/ProductPage";
 import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
         <UserProfile/>
       </AppStore> */}
 
+      <AppStore>
+      <Toaster/>
       <Header />
       {/* <Routes>
         <Route index element={<HomePage />} />
@@ -55,7 +59,11 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="category/:id" element={<CategoryPage />} />
         <Route path="product/:id" element={<ProductPage />} />
+        <Route path="cart" element={<CartPage />} />
+
       </Routes>
+
+      </AppStore>
     </>
   );
 }
